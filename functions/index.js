@@ -3,7 +3,15 @@ const app = require("express")();
 const firebase = require("firebase");
 const FBAuth = require("./util/fbAuth");
 
-const { getAllScreams, postOneScream } = require("./handlers/screams");
+const {
+    getAllScreams,
+    postOneScream,
+    getScream,
+    commentOnScream,
+    likeScream,
+    unlikeScream,
+    deleteScream
+} = require("./handlers/screams");
 const {
     signup,
     login,
@@ -17,6 +25,16 @@ const {
 app.get("/screams", getAllScreams);
 // Post one scream
 app.post("/scream", FBAuth, postOneScream);
+// Get scream
+app.get("/scream/:screamId", getScream);
+// Delete scream
+app.delete('/scream/:screamId', FBAuth, deleteScream)
+// Like a scream
+app.get('/scream/:screamId/like', FBAuth, likeScream);
+// // Unlike a scream
+app.get('/scream/:screamId/unlike', FBAuth, unlikeScream);
+// Post comment on scream
+app.post("/scream/:screamId/comment", FBAuth, commentOnScream);
 
 // User routes
 // Sign up route
